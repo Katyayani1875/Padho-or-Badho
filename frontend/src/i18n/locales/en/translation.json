@@ -1,0 +1,18 @@
+{
+  "appName": "Padho Or Badho",
+  "nav": {
+    "dashboard": "Dashboard",
+    "logout": "Logout"
+  },
+  "dashboard": {
+    "welcome": "Welcome to your Dashboard, {{name}}!",
+    "subheading": "This is your personalized learning space. Let's start learning!",
+    "subjectsTitle": "Available Subjects"
+  },
+  "subject": {
+    "chapters": "Chapters"
+  },
+  "lesson": {
+    "quizTitle": "Check Your Understanding"
+  }
+}

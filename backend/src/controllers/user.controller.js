@@ -1,7 +1,10 @@
+import User from '../models/User.model.js';
+import asyncHandler from 'express-async-handler';
+
 // @desc    Get user profile
 // @route   GET /api/v1/users/profile
 // @access  Private
-const getUserProfile = async (req, res) => {
+export const getUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
   if (user) {
     res.json({
@@ -15,6 +18,4 @@ const getUserProfile = async (req, res) => {
     res.status(404);
     throw new Error('User not found');
   }
-};
-
-module.exports = { getUserProfile };
+});

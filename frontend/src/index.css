@@ -1,8 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Add custom base styles here */
-body {
-  @apply bg-gray-50 text-gray-800 antialiased;
+@layer base {
+  body {
+    @apply bg-background text-on-background antialiased font-sans;
+  }
+  .dark body {
+    @apply bg-dark-background text-dark-on-background;
+  }
 }

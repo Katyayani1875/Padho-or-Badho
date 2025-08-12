@@ -1,15 +1,28 @@
-// backend/src/api/v1/routes/content.routes.js
-
-const express = require('express');
-const { getAllSubjects } = require('../../../controllers/content.controller');
-const { protect } = require('../../../middlewares/auth.middleware');
+import express from 'express';
+import {
+  getAllSubjects,
+  getChaptersBySubject,
+  getLessonDetails,
+  createSubject, // For admin
+} from '../../../controllers/content.controller.js';
+import { protect, admin } from '../../../middlewares/auth.middleware.js';
+import { upload } from '../../../middlewares/upload.middleware.js';
 
 const router = express.Router();
 
-// This route will be protected, meaning a user must be logged in to access it.
-router.route('/subjects').get(protect, getAllSubjects);
+// Enable detailed error logging for development
+const errorLogger = (err, req, res, next) => {
+  console.error('Route Error:', err);
+  next(err);
+};
 
-// We will add more routes here later
-// e.g., router.route('/lessons/:chapterId').get(protect, getLessons);
+// @desc    Admin route to create a new subject with an icon
+// @route   POST /api/v1/content/subjects
+router.route('/subjects').post(protect, admin, upload.single('icon'), createSubject);
 
-module.exports = router;
+// @desc    Public/User routes to get content
+router.route('/subjects').get(protect, errorLogger, getAllSubjects);
+router.route('/subjects/:subjectId/chapters').get(protect, errorLogger, getChaptersBySubject);
+router.route('/lessons/:lessonId').get(protect, errorLogger, getLessonDetails);
+
+export default router;
