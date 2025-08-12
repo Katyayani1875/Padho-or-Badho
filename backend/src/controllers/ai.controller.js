@@ -7,29 +7,21 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 const askAI = asyncHandler(async (req, res) => {
   const { question, lessonId } = req.body;
-
-  // 1. Validate the incoming request
   if (!question || !lessonId) {
     res.status(400);
     throw new Error('Please provide a question and a lesson ID.');
   }
-
-  // 2. Validate the ID format to prevent crashes
   if (!mongoose.Types.ObjectId.isValid(lessonId)) {
     res.status(400);
     throw new Error('Invalid Lesson ID format');
   }
-
-  // 3. Fetch the lesson context from the database
   const lesson = await Lesson.findById(lessonId).lean();
   if (!lesson) {
     res.status(404);
     throw new Error('Lesson context not found');
   }
-
-  // 4. Engineer the prompt for the AI
   const prompt = `
-    You are "Padho and Badho," a friendly and encouraging AI tutor for students aged 8-16 in India. 
+    You are "Padho और Badho," a friendly and encouraging AI tutor for students aged 8-16 in India. 
     Your goal is to explain concepts simply, without giving away direct answers to quiz questions.
     
     The student is currently studying the lesson titled: "${lesson.title.en}".
@@ -41,22 +33,16 @@ const askAI = asyncHandler(async (req, res) => {
   `;
 
   try {
-    // --- THIS IS THE UPDATED LINE ---
-    // 5. Get the specific Gemini model - updated to 1.5 Flash
     const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash-latest' });
-
-    // 6. Generate the content
     const result = await model.generateContent(prompt);
     const response = await result.response;
     const answer = response.text();
-
-    // 7. Send the successful response
     res.json({ answer });
     
   } catch (error) {
-    // 8. Handle any errors from the Google API
+
     console.error('Error from Gemini API:', error);
-    res.status(503); // Service Unavailable
+    res.status(503); 
     throw new Error('The AI tutor is currently unavailable. Please try again later.');
   }
 });

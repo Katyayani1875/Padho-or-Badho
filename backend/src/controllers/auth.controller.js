@@ -2,9 +2,6 @@ import User from '../models/User.model.js';
 import generateToken from '../utils/generateToken.js';
 import asyncHandler from 'express-async-handler';
 
-// @desc    Register a new user
-// @route   POST /api/v1/auth/register
-// @access  Public
 const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password, role = 'student', grade } = req.body;
 
@@ -36,9 +33,6 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc    Auth user & get token
-// @route   POST /api/v1/auth/login
-// @access  Public
 const loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 

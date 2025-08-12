@@ -14,13 +14,13 @@ const userSchema = new mongoose.Schema({
     dailyStreak: { type: Number, default: 0 },
     lastLogin: { type: Date },
     parent: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+     badges: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Badge' }],
   },
   parentProfile: {
     children: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
   }
 }, { timestamps: true });
 
-// Password hashing middleware
 userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) {
     next();
@@ -29,7 +29,6 @@ userSchema.pre('save', async function (next) {
   this.password = await bcrypt.hash(this.password, salt);
 });
 
-// Password comparison method
 userSchema.methods.matchPassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };

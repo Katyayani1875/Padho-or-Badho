@@ -9,7 +9,6 @@ const progressSchema = new mongoose.Schema({
   completedAt: { type: Date },
 }, { timestamps: true });
 
-// To prevent a user from having multiple progress docs for the same lesson
 progressSchema.index({ user: 1, lesson: 1 }, { unique: true });
 
 const Progress = mongoose.model('Progress', progressSchema);

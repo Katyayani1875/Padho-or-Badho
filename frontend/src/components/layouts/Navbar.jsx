@@ -24,8 +24,19 @@ function Navbar() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
-            <Link to="/" className="text-2xl font-bold text-primary dark:text-dark-primary">
-              {t('appName')}
+            <Link 
+              to="/" 
+              className="group flex items-center text-2xl font-extrabold tracking-tight hover:scale-105 transition-transform duration-200"
+            >
+              <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent dark:from-dark-primary dark:to-dark-secondary">
+                Padho
+              </span>
+              <span className="mx-1 text-secondary dark:text-dark-secondary">
+                और
+              </span>
+              <span className="bg-gradient-to-r from-secondary to-primary bg-clip-text text-transparent dark:from-dark-secondary dark:to-dark-primary">
+                Badho
+              </span>
             </Link>
           </div>
           <div className="flex items-center space-x-4">
@@ -33,6 +44,12 @@ function Navbar() {
               <>
                 <Link to="/dashboard" className="text-on-surface dark:text-dark-on-surface hover:text-primary dark:hover:text-dark-primary font-medium">
                   {t('nav.dashboard')}
+                </Link>
+                <Link to="/leaderboard" className="text-on-surface dark:text-dark-on-surface hover:text-primary dark:hover:text-dark-primary font-medium">
+      Leaderboard
+    </Link>
+    <Link to="/about" className="text-on-surface dark:text-dark-on-surface hover:text-primary dark:hover:text-dark-primary font-medium">
+                  About Us
                 </Link>
                 <span className="text-on-background/80 dark:text-dark-on-background/80">
                   Hi, {user.name}!

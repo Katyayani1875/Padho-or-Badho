@@ -5,6 +5,7 @@ import Subject from './models/Subject.model.js';
 import Chapter from './models/Chapter.model.js';
 import Lesson from './models/Lesson.model.js';
 import Quiz from './models/Quiz.model.js';
+import Badge from './models/Badge.model.js';
 import connectDB from './config/db.js';
 
 dotenv.config();
@@ -12,14 +13,15 @@ await connectDB();
 
 const importData = async () => {
   try {
-    // Clear existing data
+ 
+    await Badge.deleteMany();
     await Quiz.deleteMany();
     await Lesson.deleteMany();
     await Chapter.deleteMany();
     await Subject.deleteMany();
     await User.deleteMany();
 
-    // Create users
+
     const adminUser = await User.create({
       name: 'Admin User',
       email: 'admin@example.com',
@@ -27,9 +29,17 @@ const importData = async () => {
       role: 'admin',
     });
 
+    await Badge.create({
+      name: { en: 'First Step', hi: 'पहला कदम' },
+      description: { en: 'You completed your very first quiz!', hi: 'आपने अपनी पहली प्रश्नोत्तरी पूरी की!' },
+      iconUrl: 'https://cdn-icons-png.flaticon.com/512/2544/2544323.png',
+      criteria: 'COMPLETE_QUIZ',
+      criteriaValue: '1',
+    });
+
+    console.log('Badges Imported!');
     console.log('Users Imported!');
 
-    // Create Subjects with working icon URLs
     const math = await Subject.create({
       name: { en: 'Mathematics', hi: 'गणित' },
       description: { en: 'Learn the world of numbers.', hi: 'संख्याओं की दुनिया सीखें.' },
@@ -46,7 +56,6 @@ const importData = async () => {
     
     console.log('Subjects Imported!');
 
-    // --- Create Content for Math ---
     const algebraChapter = await Chapter.create({
         title: { en: 'Introduction to Algebra', hi: 'बीजगणित का परिचय' },
         chapterNumber: 1,
@@ -86,7 +95,6 @@ const importData = async () => {
     math.chapters.push(algebraChapter);
     await math.save();
 
-    // --- Create Content for Science ---
     const biologyChapter = await Chapter.create({
         title: { en: 'The Living World', hi: 'जीव जगत' },
         chapterNumber: 1,
@@ -136,6 +144,7 @@ const importData = async () => {
 
 const destroyData = async () => {
   try {
+    await Badge.deleteMany();
     await Quiz.deleteMany();
     await Lesson.deleteMany();
     await Chapter.deleteMany();

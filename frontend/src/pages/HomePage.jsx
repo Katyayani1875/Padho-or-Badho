@@ -8,7 +8,7 @@ function HomePage() {
       <section className="py-20">
         <div className="container mx-auto px-4">
           <h1 className="text-5xl md:text-6xl font-extrabold text-gray-800 leading-tight">
-            Welcome to <span className="text-blue-600">Padho and Badho</span>
+            Welcome to <span className="text-blue-600">Padho और Badho</span>
           </h1>
           <p className="mt-4 text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
             Your personalized AI-powered learning adventure. Learn, grow, and achieve your dreams, one lesson at a time.

@@ -8,9 +8,9 @@ const i18nString = {
 const lessonSchema = new mongoose.Schema({
   title: i18nString,
   lessonType: { type: String, enum: ['video', 'text', 'quiz'], required: true },
-  content: i18nString, // For text-based lessons
-  videoUrl: { type: String }, // Cloudinary URL
-  duration: { type: Number }, // in minutes
+  content: i18nString, 
+  videoUrl: { type: String }, 
+  duration: { type: Number }, 
   chapter: { type: mongoose.Schema.Types.ObjectId, ref: 'Chapter', required: true },
   quiz: { type: mongoose.Schema.Types.ObjectId, ref: 'Quiz' },
 }, { timestamps: true });

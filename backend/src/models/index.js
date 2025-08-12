@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import './Quiz.js'; // Load Quiz first
-import './Lesson.js'; // Then load Lesson that references Quiz
+import './Quiz.js'; 
+import './Lesson.js'; 
 
 console.log('All models loaded successfully');

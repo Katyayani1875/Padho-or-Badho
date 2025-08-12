@@ -5,17 +5,11 @@ import Chapter from '../models/Chapter.model.js';
 import Lesson from '../models/Lesson.model.js';
 import Quiz from '../models/Quiz.model.js';
 
-// @desc    Fetch all subjects
-// @route   GET /api/v1/content/subjects
-// @access  Private
 const getAllSubjects = asyncHandler(async (req, res) => {
   const subjects = await Subject.find({});
   res.json(subjects);
 });
 
-// @desc    Get all chapters for a specific subject
-// @route   GET /api/v1/content/subjects/:subjectId/chapters
-// @access  Private
 const getChaptersBySubject = asyncHandler(async (req, res) => {
   const chapters = await Chapter.find({ subject: req.params.subjectId }).populate('lessons');
   if (chapters) {
@@ -26,14 +20,11 @@ const getChaptersBySubject = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc    Get details of a single lesson
-// @route   GET /api/v1/content/lessons/:lessonId
-// @access  Private
 const getLessonDetails = asyncHandler(async (req, res) => {
   const { lessonId } = req.params;
   
   try {
-    // Validate ObjectId format
+
     if (!mongoose.Types.ObjectId.isValid(lessonId)) {
       return res.status(400).json({ 
         success: false,
@@ -44,7 +35,7 @@ const getLessonDetails = asyncHandler(async (req, res) => {
     const lesson = await Lesson.findById(lessonId)
       .populate({
         path: 'quiz',
-        select: '-__v -createdAt -updatedAt' // Exclude unnecessary fields
+        select: '-__v -createdAt -updatedAt' 
       })
       .populate({
         path: 'chapter',
@@ -59,12 +50,10 @@ const getLessonDetails = asyncHandler(async (req, res) => {
       });
     }
 
-    // Safely handle missing quiz
     if (lesson.quiz === null) {
       lesson.quiz = undefined;
     }
 
-    // Clean up response data
     const responseData = {
       ...lesson,
       quiz: lesson.quiz || undefined
@@ -86,9 +75,6 @@ const getLessonDetails = asyncHandler(async (req, res) => {
 
 });
 
-// @desc    Create a new subject (Admin only)
-// @route   POST /api/v1/content/subjects
-// @access  Private/Admin
 const createSubject = asyncHandler(async (req, res) => {
     const { name_en, name_hi, description_en, description_hi, gradeLevel } = req.body;
     
